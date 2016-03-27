@@ -10,6 +10,7 @@ import cz.cvut.wa2.hw2.model.Customer;
 import cz.cvut.wa2.hw2.model.PhoneNumber;
 import cz.cvut.wa2.hw2.model.PhoneType;
 import cz.cvut.wa2.hw2.model.Truck;
+import cz.cvut.wa2.hw2.service.CarStoreService;
 import cz.cvut.wa2.hw2.service.CustomerStoreService;
 import cz.cvut.wa2.hw2.service.GenericStoreService;
 
@@ -78,6 +79,15 @@ public class Main {
 		
 		customer = new CustomerStoreService().findFull(customer.getId());
 		System.out.println(customer.getRentedCars());
+		
+		printMsg("after full customer retrieval");
+		
+		new CarStoreService().findAllCarsFull().forEach(c -> {
+			System.out.println("Retrieved car: " + c.getLicencePlate());
+			System.out.println(c.getColour());
+			System.out.println(c.getBrand());
+			System.out.println(c.getRentBy());
+		});
 		
 		
 		printMsg("finished");
