@@ -9,46 +9,7 @@
 </head>
 <body>
 
-	<div class="header">
-		<h1>New car</h1>
-	</div>
-
-	<div class="content">
-
-		<form method="post" action="cars">
-			<table>
-				<tbody>
-					<tr>
-						<th>Brand</th>
-						<td>
-							<input type="text" name="brand" />
-						</td>
-					</tr>
-					<tr>
-						<th>Colour</th>
-						<td>
-							<input type="text" name="colour" />
-						</td>
-					</tr>
-					<tr>
-						<th>Licence plate number</th>
-						<td>
-							<input type="text" name="licencePlate" />
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td rowspan="2">
-							<button type="submit">Create new car</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</div>
-
-
-	<div class="footer"></div>
+	<% response.sendRedirect("cars/"); %>
 
 </body>
 </html>

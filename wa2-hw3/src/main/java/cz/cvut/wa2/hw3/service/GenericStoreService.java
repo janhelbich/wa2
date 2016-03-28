@@ -1,5 +1,7 @@
 package cz.cvut.wa2.hw3.service;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -56,6 +58,16 @@ public class GenericStoreService {
 		session.close();
 
 		return elem;
+	}
+	
+	public <E> List<E> findAllSimple(Class<E> clazz) {
+		Session session = openSession();
+		
+		@SuppressWarnings("unchecked")
+		List<E> resultList = session.createCriteria(clazz).list();
+		
+		session.close();
+		return resultList;
 	}
 
 	protected SessionFactory getSessionFactory() {

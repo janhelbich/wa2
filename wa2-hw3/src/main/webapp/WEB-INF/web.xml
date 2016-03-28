@@ -2,16 +2,5 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>CarServlet</servlet-name> -->
-<!-- 		<servlet-class>cz.cvut.wa2.hw3.servlet.CarServlet</servlet-class> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 	</servlet> -->
-	
-	<!--mapping -->
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>CarServlet</servlet-name> -->
-<!-- 		<url-pattern>/cars</url-pattern> -->
-<!-- 	</servlet-mapping> -->
 	
 </web-app>

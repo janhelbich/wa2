@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.cvut.wa2.hw3.model.Brand;
+import cz.cvut.wa2.hw3.model.Car;
 import cz.cvut.wa2.hw3.service.CarStoreService;
 
 @WebServlet(loadOnStartup = 1, urlPatterns = { "/cars", "/cars/*" })
@@ -30,11 +32,14 @@ public class CarServlet extends HttpServlet {
 				throws ServletException, IOException {
 		
 		
-		Matcher m = Pattern.compile(".*cars\\/(\\d+)(\\/)?").matcher(req.getRequestURI());
+		Matcher carById = Pattern.compile(".*cars\\/(\\d+)(\\/)?").matcher(req.getRequestURI());
+		Matcher carNew = Pattern.compile(".*cars\\/new(\\/)?").matcher(req.getRequestURI());
 		if (Pattern.matches(".*cars(\\/)?", req.getRequestURI())) {
 			listCars(req, resp);
-		} else if (m.find()) {
-			getCar(req, resp, m.group(1));
+		} else if (carById.find()) {
+			getCar(req, resp, carById.group(1));
+		} else if (carNew.find()) {
+			getCarById(req, resp, null);
 		}
 		
 	}
@@ -43,17 +48,26 @@ public class CarServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
+		Car car = (Car) req.getSession().getAttribute("car");
 		String brand = req.getParameter("brand");
 		String colour = req.getParameter("colour");
 		String licencePlate = req.getParameter("licencePlate");
+		if (car == null || car.getId() == null) {
+			logger.debug("creating new car");
+			car = new Car();
+		}
 		
-		log("car servlet: " + brand + colour + licencePlate);
+		if (brand != null && !"".equals(brand)) {
+			car.setBrand(carService.find(Brand.class, Long.parseLong(brand)));
+		}
+		car.setColour(colour);
+		car.setLicencePlate(licencePlate);
+		carService.save(car);
 		
-		resp.getWriter().write("necum pico");
+		getCarById(req, resp, car.getId());
 	}
 	
 	private void getCar(HttpServletRequest req, HttpServletResponse resp, String textId) throws IOException, ServletException {
-		
 		Long id = null;
 		try {
 			id = Long.parseLong(textId);
@@ -66,16 +80,29 @@ public class CarServlet extends HttpServlet {
 			return;
 		}
 		
-		req.getSession().setAttribute("car", carService.findFull(id));
+		getCarById(req, resp, id);
+	}
+	
+	private void getCarById(HttpServletRequest req, HttpServletResponse resp, Long id) throws IOException, ServletException {
+		logger.info("finding car with id " + id);
 		
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/cars/car.jsp");
+		if (id != null) {
+			req.getSession().setAttribute("car", carService.findFull(id));
+		} else {
+			req.getSession().setAttribute("car", new Car());
+		}
+		
+		// pro vytvoreni comboboxu znacek proste vylistuju vsechny a hotovo
+		req.getSession().setAttribute("brands", carService.findAllSimple(Brand.class));
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/cars/car.jsp");
 		requestDispatcher.forward(req, resp);
 	}
 
 	private void listCars(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		req.getSession().setAttribute("cars", carService.findAllCarsFull());
 		resp.setStatus(200);
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/cars/cars.jsp");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/cars/cars.jsp");
 		requestDispatcher.forward(req, resp);
 	}
 
