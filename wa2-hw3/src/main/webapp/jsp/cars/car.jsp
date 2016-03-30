@@ -24,7 +24,15 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="../customers">Customers</a></li>
-					<li class="active"><a href="../cars/">Cars</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+							role="button" aria-haspopup="true" 
+							aria-expanded="false">Cars <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="../cars/">List all cars</a></li>
+							<li><a href="new">New car</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			</nav>
