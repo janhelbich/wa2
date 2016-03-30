@@ -72,6 +72,27 @@
 							value="${car.licencePlate}" />
 					</div>
 				</div>
+				
+				
+				<h2>This car is made of following materials</h2>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Material</th>
+							<th>Supplier</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="supplier" items="${car.brand.suppliers}">
+							<c:forEach var="material" items="${supplier.materials}">
+								<tr>
+									<td>${material.material}</td>
+									<td>${supplier.supplierName}</td>
+								</tr>
+							</c:forEach>
+						</c:forEach>
+					</tbody>					  
+				</table>
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">

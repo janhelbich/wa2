@@ -20,5 +20,6 @@
 		<mapping class="cz.cvut.wa2.hw3.model.Truck" />
 		<mapping class="cz.cvut.wa2.hw3.model.Brand" />
 		<mapping class="cz.cvut.wa2.hw3.model.Supplier" />
+		<mapping class="cz.cvut.wa2.hw3.model.Material" />
 	</session-factory>
 </hibernate-configuration>

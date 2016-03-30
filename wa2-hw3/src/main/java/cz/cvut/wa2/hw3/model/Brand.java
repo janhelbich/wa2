@@ -1,5 +1,6 @@
 package cz.cvut.wa2.hw3.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,6 +37,9 @@ public class Brand extends AbstractEntity {
 	}
 
 	public List<Supplier> getSuppliers() {
+		if (this.suppliers == null) {
+			this.suppliers = new ArrayList<>();
+		}
 		return suppliers;
 	}
 
