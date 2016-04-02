@@ -19,17 +19,17 @@
 	<div class="container-fluid">
 
 		<jsp:include page="/jsp/include/header-template.html"></jsp:include>
-
+		
 		<div class="content">
 
-			<h1>Car detail</h1>
+			<h1>Truck detail</h1>
 
-			<form method="post" action="${car.id}" class="form-horizontal">
-				<c:if test="${car.id != null}">
+			<form method="post" action="${truck.id}" class="form-horizontal">
+				<c:if test="${truck.id != null}">
 					<div class="form-group">
 						<label for="idField" class="col-sm-2 control-label">ID</label>
 						<div class="col-sm-10">
-							<input id="idField" type="text" name="id" value="${car.id}"
+							<input id="idField" type="text" name="id" value="${truck.id}"
 								class="form-control" readonly="readonly" />
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 						<select name="brand" id="brandField" class="form-control" >
 							<option value="" label="---" />
 							<c:forEach var="brand" items="${brands}">
-								<option value="${brand.id}" label="${brand.brandName}" ${car.brand.id == brand.id ? 'selected="selected"' : ''}/>
+								<option value="${brand.id}" label="${brand.brandName}" ${truck.brand.id == brand.id ? 'selected="selected"' : ''}/>
 							</c:forEach>
 						</select>
 					</div>
@@ -51,7 +51,7 @@
 					<label for="colourField" class="col-sm-2 control-label">Colour</label>
 					<div class="col-sm-10">
 						<input id="colourField" type="text" name="colour" class="form-control"
-							value="${car.colour}" />
+							value="${truck.colour}" />
 					</div>
 				</div>
 
@@ -59,12 +59,20 @@
 					<label for="plateField" class="col-sm-2 control-label">Licence plate number</label>
 					<div class="col-sm-10">
 						<input id="plateField" type="text" name="licencePlate" class="form-control"
-							value="${car.licencePlate}" />
+							value="${truck.licencePlate}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="maxLoadField" class="col-sm-2 control-label">Maximum load [Kg]</label>
+					<div class="col-sm-10">
+						<input id="maxLoadField" type="text" name="maxKgLoad" class="form-control"
+							value="${truck.maxKgLoad}" />
 					</div>
 				</div>
 				
 				
-				<h2>This car is made of following materials</h2>
+				<h2>This truck is made of following materials</h2>
 				<table class="table table-condensed">
 					<thead>
 						<tr>
@@ -73,7 +81,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="supplier" items="${car.brand.suppliers}">
+						<c:forEach var="supplier" items="${truck.brand.suppliers}">
 							<c:forEach var="material" items="${supplier.materials}">
 								<tr>
 									<td>${material.material}</td>
@@ -86,13 +94,13 @@
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<c:if test="${car.id != null}">
-							<button class="btn btn-primary" type="submit">Update car
+						<c:if test="${truck.id != null}">
+							<button class="btn btn-primary" type="submit">Update truck
 								info</button>
 						</c:if>
-						<c:if test="${car.id eq null}">
+						<c:if test="${truck.id eq null}">
 							<button class="btn btn-primary" type="submit">Save new
-								car</button>
+								truck</button>
 						</c:if>
 					</div>
 				</div>

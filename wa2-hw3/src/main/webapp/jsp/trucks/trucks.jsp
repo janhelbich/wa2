@@ -21,7 +21,7 @@
 		
 		<div class="content">
 			
-			<h1>All cars</h1>
+			<h1>All trucks</h1>
 			
 			<table class="table table-hover">
 				<thead>
@@ -30,20 +30,22 @@
 						<th>Brand</th>
 						<th>Colour</th>
 						<th>Licence plate</th>
+						<th>Max load [Kg]</th>
 						<th>Rent by</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="car" items="${cars}">
+					<c:forEach var="truck" items="${trucks}">
 						<tr>
-							<td><c:out value="${car.id}" /></td>
-							<td><c:out value="${car.brand.brandName}" /></td>
-							<td><c:out value="${car.colour}" /></td>
-							<td><c:out value="${car.licencePlate}" /></td>
+							<td><c:out value="${truck.id}" /></td>
+							<td><c:out value="${truck.brand.brandName}" /></td>
+							<td><c:out value="${truck.colour}" /></td>
+							<td><c:out value="${truck.licencePlate}" /></td>
+							<td><c:out value="${truck.maxKgLoad}" /></td>
 							<td><c:out
-									value="${car.rentBy.firstName} ${car.rentBy.surname}" /></td>
-							<th><a href="${car.id}" class="btn btn-info">Edit</a>
+									value="${truck.rentBy.firstName} ${truck.rentBy.surname}" /></td>
+							<th><a href="${truck.id}" class="btn btn-info">Edit</a>
 						</tr>
 					</c:forEach>
 				</tbody>

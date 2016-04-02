@@ -48,13 +48,17 @@ public class CarServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		Car car = (Car) req.getSession().getAttribute("car");
+		Car car = null;
 		String brand = req.getParameter("brand");
 		String colour = req.getParameter("colour");
 		String licencePlate = req.getParameter("licencePlate");
-		if (car == null || car.getId() == null) {
+		String id = req.getParameter("id");
+		if (id == null || "".equals(id)) {
 			logger.debug("creating new car");
 			car = new Car();
+		} else {
+			logger.debug("got car ID " + id);
+			car = carService.find(Car.class, Long.parseLong(id));
 		}
 		
 		if (brand != null && !"".equals(brand)) {
@@ -75,7 +79,7 @@ public class CarServlet extends HttpServlet {
 		}
 		
 		if (id == null) {
-			logger.warn("Car ID provided in wrong format.");
+			logger.warn("Car ID provided in wrong format: " + textId);
 			badRequest(textId, resp);
 			return;
 		}
@@ -87,20 +91,20 @@ public class CarServlet extends HttpServlet {
 		logger.info("finding car with id " + id);
 		
 		if (id != null) {
-			req.getSession().setAttribute("car", carService.findFull(id));
+			req.setAttribute("car", carService.findFull(id));
 		} else {
-			req.getSession().setAttribute("car", new Car());
+			req.setAttribute("car", new Car());
 		}
 		
 		// pro vytvoreni comboboxu znacek proste vylistuju vsechny a hotovo
-		req.getSession().setAttribute("brands", carService.findAllSimple(Brand.class));
+		req.setAttribute("brands", carService.findAllSimple(Brand.class));
 		
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/cars/car.jsp");
 		requestDispatcher.forward(req, resp);
 	}
 
 	private void listCars(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		req.getSession().setAttribute("cars", carService.findAllCarsFull());
+		req.setAttribute("cars", carService.listAllCarsFull());
 		resp.setStatus(200);
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/cars/cars.jsp");
 		requestDispatcher.forward(req, resp);

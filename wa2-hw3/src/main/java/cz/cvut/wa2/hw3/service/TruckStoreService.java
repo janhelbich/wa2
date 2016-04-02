@@ -9,17 +9,17 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.cvut.wa2.hw3.model.Car;
+import cz.cvut.wa2.hw3.model.Truck;
 
-public class CarStoreService extends GenericStoreService {
+public class TruckStoreService extends GenericStoreService {
 	
-	protected static final Logger logger = LoggerFactory.getLogger(CarStoreService.class);
+	protected static final Logger logger = LoggerFactory.getLogger(TruckStoreService.class);
 
-	public List<Car> listAllCarsFull() {
+	public List<Truck> listAllTrucksFull() {
 		Session session = openSession();
 		
 		@SuppressWarnings("unchecked")
-		List<Car> result = session.createCriteria(Car.class)
+		List<Truck> result = session.createCriteria(Truck.class)
 			.setFetchMode("rentBy", FetchMode.JOIN)
 			.setFetchMode("brand", FetchMode.JOIN)
 			.list();
@@ -30,10 +30,10 @@ public class CarStoreService extends GenericStoreService {
 
 	}
 	
-	public Car findFull(Long id) {
+	public Truck findFull(Long id) {
 		Session session = openSession();
 				
-		Car car = (Car) session.createCriteria(Car.class)
+		Truck truck = (Truck) session.createCriteria(Truck.class)
 				.setFetchMode("rentBy", FetchMode.JOIN)
 				.setFetchMode("brand", FetchMode.JOIN)
 				.setFetchMode("brand.suppliers", FetchMode.JOIN)
@@ -42,7 +42,7 @@ public class CarStoreService extends GenericStoreService {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.uniqueResult();
 		
-		if (car == null) {
+		if (truck == null) {
 			session.close();
 			return null;
 		}
@@ -53,7 +53,7 @@ public class CarStoreService extends GenericStoreService {
 //		}
 		
 		session.close();
-		return car;
+		return truck;
 	}
 	
 }
